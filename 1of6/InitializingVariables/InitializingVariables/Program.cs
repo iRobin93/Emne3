@@ -15,3 +15,7 @@ Console.WriteLine($"Double1: {Double1}");
 Console.WriteLine($"String1: {String1}");
 Console.WriteLine($"Char1: {Char1}");
 Console.WriteLine($"Bool1: {Bool1}");
+
+Console.WriteLine("");
+Console.WriteLine("Press enter to exit");
+Console.ReadLine();
