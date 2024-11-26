@@ -14,8 +14,8 @@ int SumOrMultiply(int Number1, int Number2)
 
 }
 
-Console.WriteLine(" 5 og 6 er: " + Number4);
-Console.WriteLine("5 og 5 er: " + Number5);
+Console.WriteLine(" 5 + 6 er: " + Number4);
+Console.WriteLine("5 * 5 er: " + Number5);
 
 Console.WriteLine("");
 Console.WriteLine("Press enter to exit");
