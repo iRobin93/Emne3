@@ -1,7 +1,4 @@
-﻿showMenu();
-
-
-void showMenu()
+﻿void showMenu()
 {
     int UserInputInt = 0;
     string? UserInputString;
@@ -10,11 +7,25 @@ void showMenu()
     Console.WriteLine("Press 2 for change string");
     
     UserInputString = Console.ReadLine();
-    Console.WriteLine("Skriv et ord");
+    
+
+
+    
     if (UserInputString != null)
     {
-        UserInputInt = Int32.Parse(UserInputString);
+        try
+        {
+            UserInputInt = Int32.Parse(UserInputString);
+        }
+        catch (FormatException)
+        {
+            showMenu();
+            return;
+        }
+        
     }
+
+    Console.WriteLine("Skriv et ord");
 
     UserInputString = Console.ReadLine();
     
@@ -46,6 +57,7 @@ void showMenu()
     
 }
 
+showMenu();
 Console.WriteLine("");
 Console.WriteLine("Press enter to exit");
 Console.ReadLine();
