@@ -3,37 +3,27 @@ int Points = 0;
 
 bool Game()
 {
-    char Operator = '+';
+    
+    
     Random random = new Random();
     int RandomNr1 = random.Next(1, 12);
     int RandomNr2 = random.Next(1, 12);
 
     Console.WriteLine(RandomNr1 + " _ " + RandomNr2 + " \nYou got: " + Points + " points");
-    string? UserInput = Console.ReadLine();
-    if (UserInput != null)
-    {
-        if (UserInput == "<")
-            Operator = '<';
-        else if (UserInput == ">")
-            Operator = '>';
-        else if (UserInput == "=")
-            Operator = '=';
-        else
-        {
-            Console.WriteLine("Ending game");
-            return false;
-        }
+    ConsoleKeyInfo key = Console.ReadKey(true);
+    char usersChar = key.KeyChar;
+    Console.WriteLine(usersChar);
 
-    }
-      
-    else
+
+    if (!(usersChar == '<' || usersChar == '>' || usersChar == '='))
     {
         Console.WriteLine("Ending game");
         return false;
     }
+       
 
 
-    if (checkAnswer(RandomNr1, RandomNr2, Operator))
+    if (checkAnswer(RandomNr1, RandomNr2, usersChar))
     {
         Points++;
         
