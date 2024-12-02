@@ -37,16 +37,17 @@ namespace Studentadministrasjonssystem
         public double GetMean()
         {
             int count = 0;
+            double SumKarakter = 0;
             double mean = 0;
             foreach(Karakter karakter in Karakter.karakterer)
             {
                 if(karakter._student == this)
                 {
                     count++;
-                    mean += karakter._karakter;
+                    SumKarakter += karakter._karakter;
                 }            
             }
-            mean = mean / count;
+            mean = SumKarakter / count;
             return mean;
         }
         
