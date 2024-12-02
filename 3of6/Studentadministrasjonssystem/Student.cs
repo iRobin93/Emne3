@@ -13,6 +13,7 @@ namespace Studentadministrasjonssystem
         private int _age;
         private string _studyprogram;
         private string _studentId;
+        public List<Fag> Fagliste;
 
         public Student(string name, int age, string studyprogram, string studentId)
         {
@@ -22,12 +23,32 @@ namespace Studentadministrasjonssystem
             _studentId = studentId;
         }
 
+
+
         public void writeInfo()
         {
             Console.WriteLine($"Navn: {_name} \n Alder: {_age} \n Studentprogram: {_studyprogram} \n StudentId: {_studentId}");
         }
 
-
-
+        public string GetName() 
+        {
+            return _name;
+        }
+        public double GetMean()
+        {
+            int count = 0;
+            double mean = 0;
+            foreach(Karakter karakter in Karakter.karakterer)
+            {
+                if(karakter._student == this)
+                {
+                    count++;
+                    mean += karakter._karakter;
+                }            
+            }
+            mean = mean / count;
+            return mean;
+        }
+        
     }
 }

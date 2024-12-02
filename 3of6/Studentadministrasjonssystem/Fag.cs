@@ -25,5 +25,10 @@ namespace Studentadministrasjonssystem
         {
             Console.WriteLine($"Fagkode: {_fagkode}\nfag: {_fagnavn}\nStudiepoeng: {_antallStudiepoeng}");
         }
+
+        public string GetName()
+        {
+            return _fagnavn;
+        }
     }
 }
