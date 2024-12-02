@@ -1,60 +1,73 @@
 ﻿using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-
+bool gameRunning = true;
+int RandomNr = 0;
 void InitializeGame()
 {
-    int RandomNr = new Random().Next(1, 101);
-    Game(RandomNr);
+    RandomNr = new Random().Next(1, 101);
 }
 
-bool Game(int RandomNr)
+void Game()
 {
-    int userInputInt = 0;
-    
-    Console.WriteLine("Guess a number between 1-100");
-    var userInput = Console.ReadLine();
-    try
+    while (true)
     {
-        userInputInt = Int32.Parse(userInput);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex.Message);
-    }
-    
-    if(userInputInt == RandomNr)
-    {
-        Console.WriteLine("You Won");
-        Console.WriteLine("Do you want to play again? Y/N");
-        ConsoleKeyInfo userInput2 = Console.ReadKey();
-        if(userInput2.KeyChar == 'y')
+        int userInputInt = 0;
+
+        Console.WriteLine("Guess a number between 1-100");
+        var userInput = Console.ReadLine();
+        if (userInput == "")
         {
-            InitializeGame();
-            return true;
+            return;
         }
-        else { return false; }
-    }
-    else
-    {
-        if (userInputInt < RandomNr)
+        try
         {
-            Console.WriteLine("Random nr is higher");
+
+            userInputInt = Int32.Parse(userInput);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
 
-        else if (userInputInt > RandomNr) 
+        if (userInputInt == RandomNr)
         {
-            Console.WriteLine("Random nr is lower");
+            Console.WriteLine("You Won");
+            return;
         }
+        else
+        {
+            if (userInputInt < RandomNr)
+            {
+                Console.WriteLine("Random nr is higher");
+            }
 
-        Game(RandomNr);
+            else if (userInputInt > RandomNr)
+            {
+                Console.WriteLine("Random nr is lower");
+            }
+
+
+        }
     }
-    
+
+
 }
 
 
 InitializeGame();
-
+while (gameRunning)
+{
+    Game();
+    Console.WriteLine("Do you want to play again? Y/N");
+    ConsoleKeyInfo userInput2 = Console.ReadKey();
+    if (userInput2.KeyChar == 'y')
+    {
+        InitializeGame();
+    }
+    else { gameRunning = false; }
+}
+    
 Console.WriteLine("");
 Console.WriteLine("Press enter to exit");
 Console.ReadLine();
