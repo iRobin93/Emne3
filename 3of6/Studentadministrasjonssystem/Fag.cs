@@ -11,7 +11,7 @@ namespace Studentadministrasjonssystem
     {
         private string _fagkode;
         private string _fagnavn;
-        private int _antallStudiepoeng;
+        public int _antallStudiepoeng {  get; private set; }
 
 
         public Fag(string fagkode, string fagnavn, int poeng)

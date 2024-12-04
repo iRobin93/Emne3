@@ -7,3 +7,7 @@ Pikachu.Feed(2);
 
 Console.WriteLine(Pikachu.Name);
 Console.WriteLine(Pikachu.Attack);
+
+Console.WriteLine("");
+Console.WriteLine("Press enter to exit");
+Console.ReadLine();

@@ -47,6 +47,7 @@ student1.writeInfo();
 student2.writeInfo();
 fag1.writeInfo();
 fag2.writeInfo();
+fag3.writeInfo();
 foreach (Karakter karakter in Karakter.karakterer)
 {
     karakter.writeInfo();
@@ -54,3 +55,9 @@ foreach (Karakter karakter in Karakter.karakterer)
 
 Console.WriteLine($"Navn: {student1.GetName()} sin gjennomsnittskarakter er: " + student1.GetMean());
 Console.WriteLine($"Navn: {student2.GetName()} sin gjennomsnittskarakter er: " + student2.GetMean());
+Console.WriteLine($"Studiepoeng for {student1.GetName()} er: {student1.GetTotalStudyPoints()}");
+Console.WriteLine($"Studiepoeng for {student2.GetName()} er: {student2.GetTotalStudyPoints()}");
+
+Console.WriteLine("");
+Console.WriteLine("Press enter to exit");
+Console.ReadLine();

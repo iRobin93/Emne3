@@ -51,5 +51,15 @@ namespace Studentadministrasjonssystem
             return mean;
         }
         
+        public int GetTotalStudyPoints()
+        {
+            int sum = 0;
+            foreach (Fag fagObject in Fagliste)
+            {
+                sum += fagObject._antallStudiepoeng;
+            }
+
+            return sum;
+        }
     }
 }
