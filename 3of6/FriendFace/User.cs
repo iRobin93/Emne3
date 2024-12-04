@@ -81,13 +81,33 @@ namespace FriendFace
 
         public void WriteFriendInfo()
         {
-
+            Console.Clear();
+            foreach (var friend in friends)
+                Console.WriteLine(friend.Name + " ID: " + friend.Id);
+            Console.WriteLine("Trykk en ID for å skrive ut info til venn");
+            var input = Console.ReadKey();
+            foreach(var friend in friends)
+            {
+                if (input.KeyChar.ToString() == friend.Id.ToString())
+                {
+                    Console.Clear();
+                    friend.WriteInfo();
+                }
+                    
+            }
+            Console.WriteLine("Trykk en tast for å gå tilbake til meny");
+            Console.ReadKey();
         }
 
         public int GetId()
         {
             HighestId++;
             return HighestId;
+        }
+
+        public void WriteInfo()
+        {
+            Console.WriteLine(Info);
         }
     }
 }

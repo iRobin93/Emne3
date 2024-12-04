@@ -11,8 +11,23 @@
 
 using System.Reflection.Metadata;
 using FriendFace;
+
+
+
 ConsoleKeyInfo input;
 User MyUser = new User("Robin", "Test1@hotmail.no", "1234", "Hei, jeg heter Robin");
+void WriteMenu()
+{
+    Console.WriteLine("Hei og velkommen til FriendFace");
+    Console.WriteLine("Tast 1 for å legge til en venn");
+    Console.WriteLine("Tast 2 for å fjerne en venn");
+    Console.WriteLine("Tast 3 for å vise alle dine venner");
+    Console.WriteLine("Tast 4 for å velge en venn og å printe ut infoen deres");
+    Console.WriteLine("Tast 5 for å avslutte");
+
+}
+
+
 User.Users.Add(MyUser);
 User.Users.Add(new User("Ole Morten", "Test2@hotmail.no", "1234", "Hei, jeg heter Ole Morten"));
 User.Users.Add(new User("Mona", "Test3@hotmail.no", "1234", "Hei, jeg heter Mona"));
@@ -47,17 +62,6 @@ while (true)
     Console.Clear();
 }
 EndWhile:
-
-
-
-
-void WriteMenu()
-{
-    Console.WriteLine("Hei og velkommen til FriendFace");
-    Console.WriteLine("Tast 1 for å legge til en venn");
-    Console.WriteLine("Tast 2 for å fjerne en venn");
-    Console.WriteLine("Tast 3 for å vise alle dine venner");
-    Console.WriteLine("Tast 4 for å velge en venn og å printe ut infoen deres");
-    Console.WriteLine("Tast 5 for å avslutte");
-
-}
+Console.WriteLine("");
+Console.WriteLine("Press enter to exit");
+Console.ReadLine();
