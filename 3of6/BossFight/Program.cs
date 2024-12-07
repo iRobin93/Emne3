@@ -10,7 +10,7 @@ bool end;
 
 while (true)
 {
-    Console.WriteLine("Velkommen til BossFight, trykk 1 for å fighte, 5 for å avslutte");
+    Console.WriteLine("Velkommen til BossFight, trykk en tast for å fighte, 5 for å avslutte");
 
 var input = Console.ReadKey();
     if (input.KeyChar == '5')
