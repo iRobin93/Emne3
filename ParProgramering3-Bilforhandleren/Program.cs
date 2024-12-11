@@ -41,7 +41,7 @@ bool ShowMenu()
     {
         Console.WriteLine("Tast en ID for å kjøpe bilen");
         foreach (var car in cars)
-            Console.WriteLine(car._id);
+            Console.WriteLine("Bilen " + car._brand + " har ID " + car._id);
         string input1 = Console.ReadLine();
         Console.WriteLine();
 
