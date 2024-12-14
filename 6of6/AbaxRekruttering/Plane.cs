@@ -28,5 +28,10 @@ namespace AbaxRekruttering
             Console.WriteLine("ID: " + _id + " Effekt: " + _effect + " Type: " + _type + "Wingspan: " + _wingSpan + "Cargo limit: " + _cargoLimit + "Weight: " + _weight);
 
         }
+
+        internal override void Run()
+        {
+            Console.WriteLine("You fly the plane!");
+        }
     }
 }

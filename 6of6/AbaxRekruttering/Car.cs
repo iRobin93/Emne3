@@ -40,6 +40,9 @@ namespace AbaxRekruttering
             Console.WriteLine("ID: " + _id + " Effekt: " + _effect + " Max speed: " + _maxSpeed + " Color: " + _color + " Type: " + _type);
         }
 
-
+        internal override void Run()
+        {
+            Console.WriteLine("You drive the car!");
+        }
     }
 }

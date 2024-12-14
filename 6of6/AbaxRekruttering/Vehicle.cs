@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbaxRekruttering
 {
-    internal class Vehicle
+    abstract class Vehicle
     {
         internal string _id;
         internal int _effect;
@@ -39,14 +39,9 @@ namespace AbaxRekruttering
         }
 
 
-        public virtual void PrintInfo()
-        {
+        public abstract void PrintInfo();
 
-        }
-
-        public void Run()
-        {
-
-        }
+        internal abstract void Run();
+  
     }
 }
