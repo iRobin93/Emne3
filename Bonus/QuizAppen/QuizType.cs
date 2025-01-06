@@ -4,5 +4,6 @@
     {
         Geografi,
         Sport,
+        Historie,
     }
 }

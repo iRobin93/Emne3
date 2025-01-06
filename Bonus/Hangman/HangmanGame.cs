@@ -18,7 +18,8 @@ namespace Hangman
 
         public HangmanGame()
         {
-            ReadFile("C:\\Users\\robin\\source\\repos\\Emne3\\Bonus\\Hangman\\WordList.txt");
+            if(_lines.Count == 0)
+                ReadFile("C:\\Users\\robin\\source\\repos\\Emne3\\Bonus\\Hangman\\WordList.txt");
             PickRandomWord();
             DrawLettersReturnWin();
             DrawHangman();
