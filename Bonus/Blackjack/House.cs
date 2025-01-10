@@ -8,5 +8,30 @@ namespace Blackjack
 {
     internal class House
     {
+        private Hand _hand = new Hand();
+
+
+
+        public void DealCard(Card card)
+        {
+            _hand.AddCard(card);
+        }
+
+        public string GetStringCardsInHand()
+        {
+            return _hand.GetStringCardsInHand(true);
+        }
+
+
+        public RankEnum GetValueOfCard(int indexCard)
+        {
+           return  _hand.GetValueOfCard(indexCard);
+
+        }
+
+        public int GetHandValue()
+        {
+            return _hand.GetValueOfHand();
+        }
     }
 }

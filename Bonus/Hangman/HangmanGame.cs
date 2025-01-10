@@ -205,7 +205,7 @@ namespace Hangman
                     Console.WriteLine("  |     /|\\");
                     Console.WriteLine("  |     / \\");
                     Console.WriteLine("  |");
-                    Console.WriteLine("  Game Over!");
+                    Console.WriteLine("  Game Over! The word was: " + _chosenWord);
                     break;
                 default:
                     Console.WriteLine("Invalid guess count");

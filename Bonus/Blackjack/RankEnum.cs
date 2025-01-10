@@ -17,9 +17,9 @@ namespace Blackjack
         Eight,
         Nine,
         Ten,
-        Jack,
-        Queen,
-        King,
+        Jack = 10,
+        Queen = 10,
+        King = 10,
         Ace,
     }
 }

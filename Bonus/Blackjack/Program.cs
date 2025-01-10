@@ -20,15 +20,83 @@
  * 7. sjekk vinn eller tap - spiller får eller taper penger.
  * 8. goto 2.5 eller punkt 2 dersom man skal shuffle på nytt etter 40 kort.
  * 
- * 
- * 
- * 
  */
 
+
+using System.Reflection.Metadata.Ecma335;
 using Blackjack;
 
-var game = new Game();
 var deck = new Deck();
 var player  = new Player(1000);
 var house  = new House();
+var game = new Game(deck, player, house);
+string bet = "";
+char input;
+deck.ShuffleCards();
+//deck.WriteAllCards();
+
+Console.WriteLine("Hvor mye vil du bette ? Du har: " + player.GetMoney() + " kroner");
+
+player.SetInsurance(false);
+// Todo: Feilhåndtering på feil input.
+bet = Console.ReadLine();
+player.SetBet(Int32.Parse(bet));
+
+game.DealCardPlayer(0);
+game.DealCardHouse();
+game.DealCardPlayer(0);
+game.DealCardHouse();
+Console.WriteLine("Huset har: " + house.GetStringCardsInHand() + "Du har: " + player.GetStringCardsInHand(0));
+RankEnum card1RankEnum = house.GetValueOfCard(0);
+if (card1RankEnum == RankEnum.Ace)
+{
+    Console.WriteLine("Vil du ha forskikring ? J/N");
+    input = Console.ReadKey().KeyChar;
+    if (input == 'J')
+    {
+        player.SetInsurance(true);
+    }
+    var card2RankEnum = house.GetValueOfCard(1);
+    if (card2RankEnum == RankEnum.Ten)
+    {
+        Console.WriteLine("Huset har Blackjack");
+        if (!player.HasInsurance())
+            if (!player.HasBlackJack())
+                player.RemoveOrAddMoney(false, 1);
+
+        //todo: continue;
+    }
+    else
+    {
+        Console.WriteLine("Huset har ikke Blackjack!");
+        player.RemoveInsuranceMoney();
+    }
+}
+
+//Todo split
+
+Console.WriteLine("Hva vil du gjøre ? 1 - Trekk ett kort. 2 - Stå. 3 - doble.");
+
+//Todo: input feilhåndtering.
+input = Console.ReadKey().KeyChar;
+if (input == '1')
+{
+    game.DealCardPlayer(0);
+
+}
+else if (input == '2')
+{
+    game.EndRound();
+}
+else if (input == '3')
+{
+    game.DealCardPlayer(0);
+    player.DoubleBet();
+    game.EndRound();
+}
+else if (input == '4')
+{
+    //split
+}
+
 

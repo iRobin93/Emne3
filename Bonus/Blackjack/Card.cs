@@ -10,12 +10,14 @@ namespace Blackjack
     {
         private SuitEnum _suit;
         private RankEnum _rank;
+        private string _rankString;
 
 
-        public Card(SuitEnum suit, RankEnum rank)
+        public Card(SuitEnum suit, RankEnum rank, string rankString)
         {
             _suit = suit;
             _rank = rank;
+            _rankString = rankString;
         }
 
 
@@ -24,5 +26,15 @@ namespace Blackjack
             return _rank;
         }
 
+        public SuitEnum GetSuit() 
+        {
+            return _suit;
+        }
+
+
+        public string GetRankString() 
+        {
+            return _rankString;
+        }
     }
 }
