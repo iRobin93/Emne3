@@ -17,9 +17,9 @@ namespace Blackjack
             _hand.AddCard(card);
         }
 
-        public string GetStringCardsInHand()
+        public string GetStringCardsInHand(bool hideSecondCard)
         {
-            return _hand.GetStringCardsInHand(true);
+            return _hand.GetStringCardsInHand(hideSecondCard, false);
         }
 
 
@@ -32,6 +32,11 @@ namespace Blackjack
         public int GetHandValue()
         {
             return _hand.GetValueOfHand();
+        }
+
+        public void ResetCards()
+        {
+            _hand = new Hand();
         }
     }
 }

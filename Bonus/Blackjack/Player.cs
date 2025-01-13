@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,20 +9,41 @@ namespace Blackjack
 {
     internal class Player
     {
-        private int _money;
-        private int _bet;
+        private double _money;
         private bool _insurance = false;
         private List<Hand> _hands = new List<Hand>();
 
         public Player(int startingmoney)
         {
-
+            _hands.Add(new Hand());
             _money = startingmoney;
-            //_hands.Add();
         }
 
+        public void HandDone(int indexHand)
+        {
+            _hands[indexHand].HandDone();
+        }
 
-        
+        public int GetNumberOfHands()
+        {
+            return _hands.Count;
+        }
+
+        public bool CheckIfHandDone(int indexHand)
+        {
+            return _hands[indexHand].IsDone();
+        }
+
+        public bool AllHandsDone()
+        {
+            
+            foreach (Hand hand in _hands)
+            {
+                if (!hand.IsDone())
+                    return false; 
+            }
+            return true;
+        }
 
         public void DealCard(Card card, int indexHand)
         {
@@ -32,45 +54,55 @@ namespace Blackjack
             _hands[indexHand].AddCard(card);
         }
 
-        public void SetBet(int bet)
+        public void SetBet(int bet, int indexHand)
         {
-            _bet = bet;
+            _hands[(indexHand)].SetBet(bet);
         }
 
-        public void DoubleBet()
+        public void DoubleBet(int indexHand)
         {
-            _bet = _bet * 2;
+            _hands[indexHand].DoubleBet();
         }
 
-        public int GetMoney()
+        public double GetMoney()
         {
             return _money;
         }
 
-        public bool HasBlackJack()
+        public bool HasBlackJack(int indexHand)
         {
-            return _hands[0].HasBlackJack();
+            return _hands[indexHand].HasBlackJack();
         }
 
-        public void RemoveOrAddMoney(bool increase, double multiplier)
+        public void RemoveOrAddMoney(bool increase, double multiplier, int indexHand)
         {
             if (increase)
             {
-                _money += _bet;
-                Console.WriteLine("Du har tjent: " + _bet);
+                _money += _hands[indexHand].GetBet() * multiplier;
+                Console.WriteLine("Du har tjent: " + _hands[indexHand].GetBet() * multiplier + " kroner");
             }
-            else _money -= _bet;
+            else
+            {
+                _money -= _hands[indexHand].GetBet() * multiplier;
+                Console.WriteLine("Du tapte: " + _hands[indexHand].GetBet() * multiplier + " kroner");
+            }
+
         }
 
         public void RemoveInsuranceMoney()
         {
             if (_insurance)
-                _money -= _bet / 2;
+            {
+                _money -= _hands[0].GetBet() / 2;
+                Console.WriteLine("Vi trakk " + _hands[0].GetBet() / 2+ " kroner");
+            }
+                
+            
         }
 
-        public string GetStringCardsInHand(int indexHand)
+        public string GetStringCardsInHand(int indexHand, bool lastCardOnly)
         {
-            return _hands[indexHand].GetStringCardsInHand(false);
+            return _hands[indexHand].GetStringCardsInHand(false, lastCardOnly);
         }
 
         public void SetInsurance(bool insurance)
@@ -86,6 +118,12 @@ namespace Blackjack
         public int GetHandValue(int indexHand)
         {
             return _hands[indexHand].GetValueOfHand();
+        }
+
+        public void ResetCards()
+        {
+            _hands.Clear();
+            _hands.Add(new Hand());
         }
 
     }

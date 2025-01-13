@@ -32,71 +32,107 @@ var house  = new House();
 var game = new Game(deck, player, house);
 string bet = "";
 char input;
+
+
+
+void WriteInfo()
+{
+    Console.WriteLine("Huset har: " + house.GetStringCardsInHand(true) + "Du har: " + player.GetStringCardsInHand(0, false));
+}
+
+
 deck.ShuffleCards();
 //deck.WriteAllCards();
 
-Console.WriteLine("Hvor mye vil du bette ? Du har: " + player.GetMoney() + " kroner");
 
-player.SetInsurance(false);
-// Todo: Feilhåndtering på feil input.
-bet = Console.ReadLine();
-player.SetBet(Int32.Parse(bet));
 
-game.DealCardPlayer(0);
-game.DealCardHouse();
-game.DealCardPlayer(0);
-game.DealCardHouse();
-Console.WriteLine("Huset har: " + house.GetStringCardsInHand() + "Du har: " + player.GetStringCardsInHand(0));
-RankEnum card1RankEnum = house.GetValueOfCard(0);
-if (card1RankEnum == RankEnum.Ace)
+do
 {
-    Console.WriteLine("Vil du ha forskikring ? J/N");
+    Console.WriteLine("Hvor mye vil du bette ? Du har: " + player.GetMoney() + " kroner");
+    
+    game.StartRound();
+    // Todo: Feilhåndtering på feil input.
+    bet = Console.ReadLine();
+    player.SetBet(Int32.Parse(bet), 0);
+
+    game.DealCardPlayer(0, false);
+    game.DealCardHouse();
+    game.DealCardPlayer(0, false);
+    game.DealCardHouse();
+    WriteInfo();
+    RankEnum card1RankEnum = house.GetValueOfCard(0);
+    if (card1RankEnum == RankEnum.Ace)
+    {
+        Console.WriteLine("Vil du ha forskikring ? J/N");
+        input = Console.ReadKey().KeyChar;
+        if (input == 'J' || input == 'j')
+        {
+            player.SetInsurance(true);
+        }
+        var card2RankEnum = house.GetValueOfCard(1);
+        if (card2RankEnum == RankEnum.Ten)
+        {
+            Console.WriteLine("Huset har Blackjack");
+            if (!player.HasInsurance())
+                if (!player.HasBlackJack(0))
+                    player.RemoveOrAddMoney(false, 1, 0);
+                else
+                {
+                    Console.WriteLine("Det er likt.");
+                }
+            else
+            {
+                player.RemoveInsuranceMoney();
+            }
+
+            //todo: continue;
+        }
+        else
+        {
+            Console.WriteLine("Huset har ikke Blackjack!");
+            player.RemoveInsuranceMoney();
+        }
+    }
+
+    //Todo split
+
+    Console.WriteLine("Hva vil du gjøre ? 1 - Trekk ett kort. 2 - Stå. 3 - doble.");
+    do
+    {
+        //Todo: input feilhåndtering.
+        input = Console.ReadKey().KeyChar;
+        Console.WriteLine();
+        Console.WriteLine();
+        if (input == '1')
+        {
+            game.DealCardPlayer(0, true);
+            if (!player.CheckIfHandDone(0))
+                WriteInfo();
+
+        }
+        else if (input == '2')
+        {
+            player.HandDone(0);
+        }
+        else if (input == '3')
+        {
+            game.DealCardPlayer(0, true);
+            player.DoubleBet(0);
+            player.HandDone(0);
+        }
+        else if (input == '4')
+        {
+            //split
+        }
+        if (player.AllHandsDone())
+        {
+            game.EndRound();
+        }
+
+    } while (!game.CheckIfRoundEnded());
+    Console.WriteLine("Vil du fortsette å spille? J/N");
     input = Console.ReadKey().KeyChar;
-    if (input == 'J')
-    {
-        player.SetInsurance(true);
-    }
-    var card2RankEnum = house.GetValueOfCard(1);
-    if (card2RankEnum == RankEnum.Ten)
-    {
-        Console.WriteLine("Huset har Blackjack");
-        if (!player.HasInsurance())
-            if (!player.HasBlackJack())
-                player.RemoveOrAddMoney(false, 1);
-
-        //todo: continue;
-    }
-    else
-    {
-        Console.WriteLine("Huset har ikke Blackjack!");
-        player.RemoveInsuranceMoney();
-    }
-}
-
-//Todo split
-
-Console.WriteLine("Hva vil du gjøre ? 1 - Trekk ett kort. 2 - Stå. 3 - doble.");
-
-//Todo: input feilhåndtering.
-input = Console.ReadKey().KeyChar;
-if (input == '1')
-{
-    game.DealCardPlayer(0);
-
-}
-else if (input == '2')
-{
-    game.EndRound();
-}
-else if (input == '3')
-{
-    game.DealCardPlayer(0);
-    player.DoubleBet();
-    game.EndRound();
-}
-else if (input == '4')
-{
-    //split
-}
+    Console.WriteLine();
+} while (input != 'N' && input != 'n');
 
 
