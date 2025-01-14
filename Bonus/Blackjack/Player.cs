@@ -51,6 +51,17 @@ namespace Blackjack
             return _hands[indexHand].CheckIfCardsAreSame();
         }
 
+
+        public bool AllHandsBusted()
+        {
+            foreach (Hand hand in _hands)
+            {
+                if (!hand.IsBusted())
+                    return false;
+            }
+            return true;
+        }
+
         public bool AllHandsDone()
         {
             
@@ -143,6 +154,11 @@ namespace Blackjack
         {
             _hands.Clear();
             _hands.Add(new Hand());
+        }
+
+        public int GetBet(int indexHand)
+        {
+            return _hands[indexHand].GetBet();
         }
 
     }

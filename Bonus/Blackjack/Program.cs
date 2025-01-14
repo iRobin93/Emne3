@@ -31,7 +31,7 @@ var player  = new Player(1000);
 var house  = new House();
 var game = new Game(deck, player, house);
 string bet = "";
-char input;
+char input = ' ';
 
 
 
@@ -51,9 +51,28 @@ do
     Console.WriteLine("Hvor mye vil du bette ? Du har: " + player.GetMoney() + " kroner");
     
     game.StartRound();
-    // Todo: Feilhåndtering på feil input.
+
     bet = Console.ReadLine();
-    player.SetBet(Int32.Parse(bet), 0);
+    if(Int32.TryParse(bet, out int result))
+    {
+        if(result > player.GetMoney())
+        {
+        Console.WriteLine("Du kan ikke bette mer enn du har!");
+        continue;
+        }
+        else if (result <= 0)
+        {
+            Console.WriteLine("Bet mer enn 0!");
+            continue;
+        }
+            player.SetBet(result, 0);
+    }
+    else
+    {
+        Console.WriteLine("Skriv et tall");
+        continue;
+    }
+
 
     game.DealCardPlayer(0, false);
     game.DealCardHouse();
@@ -67,7 +86,10 @@ do
         input = Console.ReadKey().KeyChar;
         if (input == 'J' || input == 'j')
         {
-            player.SetInsurance(true);
+            if(player.GetMoney() < player.GetBet(0))
+                Console.WriteLine("Du har ikke nok penger til forsikring!");
+            else
+                player.SetInsurance(true);
         }
         var card2RankEnum = house.GetValueOfCard(1);
         if (card2RankEnum == RankEnum.Ten)
@@ -100,9 +122,27 @@ do
     {
         do
         {
+            int maxInputNumber = 2;
+            Console.WriteLine("Huset har: " + house.GetStringCardsInHand(true));
+            Console.WriteLine($"Hånd nr {i+1} har: ");
+            Console.WriteLine(player.GetStringCardsInHand(i, false));
+            Console.WriteLine("Verdien er : " + player.GetHandValue(i));
+
             Console.WriteLine(game.GetWriteString(i));
             //Todo: input feilhåndtering.
             input = Console.ReadKey().KeyChar;
+            if (player.GetNumberOfCardsInHand(i) < 3)
+            {
+                maxInputNumber = 3;
+                if (player.CheckIfCardsAreSame(i))
+                    maxInputNumber = 4;
+
+            }
+            if (!Char.IsNumber(input) || ((input - 48) > maxInputNumber) || ((input - 48) < 1))
+            {
+                Console.WriteLine("Tallet må være mellom 1 og " + maxInputNumber);
+                continue;
+            }
             Console.WriteLine();
             Console.WriteLine();
             if (input == '1')
@@ -118,22 +158,39 @@ do
             }
             else if (input == '3')
             {
+                if(player.GetMoney() < player.GetBet(i))
+                {
+                    Console.WriteLine("Du har ikke nok til å doble!");
+                }
+                else
+                {
                 game.DealCardPlayer(i, true);
                 player.DoubleBet(i);
                 player.HandDone(i);
+                }
+
             }
             else if (input == '4')
             {
+                if (player.GetMoney() < player.GetBet(i))
+                {
+                    Console.WriteLine("Du har ikke nok til å splitte!");
+                }
+                else
+                {
                 player.SplitHand(i);
                 game.DealCardPlayer(i, true);
                 game.DealCardPlayer(Hands, true);
                 Hands++;
+                }
+
             }
 
         } while (!player.CheckIfHandDone(i));
     }
     game.EndRound();
 EndBecauseBlackjack:
+    Console.WriteLine();
     Console.WriteLine("Vil du fortsette å spille? J/N");
     input = Console.ReadKey().KeyChar;
     Console.WriteLine();

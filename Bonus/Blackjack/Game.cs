@@ -50,7 +50,8 @@ namespace Blackjack
             _player.DealCard(card, indexHand);
             if (writeInfo)
             {
-                Console.WriteLine("Du trakk: " + _player.GetStringCardsInHand(indexHand, true));
+
+                Console.WriteLine($"Hånd {indexHand + 1} trakk: " + _player.GetStringCardsInHand(indexHand, true));
             }
 
             if(_player.GetHandValue(indexHand) > 21)
@@ -70,29 +71,32 @@ namespace Blackjack
         public void EndRound()
         {
             _endRoundBool = true;
-            while (_house.GetHandValue() < 17)
+            while (_house.GetHandValue() < 17 && !_player.AllHandsBusted())
             {
                 DealCardHouse();
             }
             Console.WriteLine("Hånden til huset er: " + _house.GetStringCardsInHand(false));
-            Console.WriteLine("Huset har: " + _house.GetHandValue().ToString() + "\nDu har: " + _player.GetHandValue(0).ToString());
+            Console.WriteLine("Huset har: " + _house.GetHandValue().ToString());
 
             for (int i = 0; i < _player.GetNumberOfHands(); i++) 
             {
+                Console.Write("Hånd nummer " + (i + 1) + ": " + "\nHånden har: " + _player.GetHandValue(i).ToString() + " ");
                 if (_player.GetHandValue(i) > 21)
                 {
                     Console.WriteLine("Sprukket hånd");
                     _player.RemoveOrAddMoney(false, 1, i);
-                }
-                else if (_player.GetHandValue(i) == _house.GetHandValue())
-                {
-                    Console.WriteLine("Det er likt, du beholder potten");
                 }
                 else if (_player.HasBlackJack(i))
                 {
                     Console.WriteLine("Du har blackjack!");
                     _player.RemoveOrAddMoney(true, 1.5, i);
                 }
+
+                else if (_player.GetHandValue(i) == _house.GetHandValue())
+                {
+                    Console.WriteLine("Det er likt, du beholder potten");
+                }
+
 
                 else if (_player.GetHandValue(i) > _house.GetHandValue() || _house.GetHandValue() > 21)
                 {

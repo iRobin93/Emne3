@@ -12,12 +12,18 @@ namespace Blackjack
         private List<Card> _cardsInHand = new List<Card>();
         private bool _isDone = false;
         private int _bet;
+        private bool _isBusted = false;
 
         public void AddCard(Card card)
         {
             _cardsInHand.Add(card);
             if(GetValueOfHand() > 21)
+            {
                 _isDone = true;
+                _isBusted = true;
+            }
+                
+                
         }
 
         public void HandDone()
@@ -33,7 +39,10 @@ namespace Blackjack
             newHand.SetBet(_bet);
         }
 
-
+        public bool IsBusted()
+        {
+            return _isBusted;
+        }
         public bool IsDone()
         {
             return _isDone;
