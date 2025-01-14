@@ -19,6 +19,13 @@ namespace Blackjack
             _money = startingmoney;
         }
 
+        public void SplitHand(int indexHand)
+        {
+            var hand = new Hand();
+            _hands.Add(hand);
+            _hands[indexHand].SplitHand(hand);
+        }
+
         public void HandDone(int indexHand)
         {
             _hands[indexHand].HandDone();
@@ -34,6 +41,16 @@ namespace Blackjack
             return _hands[indexHand].IsDone();
         }
 
+        public int GetNumberOfCardsInHand(int indexHand)
+        {
+            return _hands[indexHand].GetNumberOfCardsInHand();
+        }
+
+        public bool CheckIfCardsAreSame(int indexHand)
+        {
+            return _hands[indexHand].CheckIfCardsAreSame();
+        }
+
         public bool AllHandsDone()
         {
             
@@ -44,6 +61,8 @@ namespace Blackjack
             }
             return true;
         }
+
+       
 
         public void DealCard(Card card, int indexHand)
         {

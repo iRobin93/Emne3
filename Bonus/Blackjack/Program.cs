@@ -85,7 +85,7 @@ do
                 player.RemoveInsuranceMoney();
             }
 
-            //todo: continue;
+            goto EndBecauseBlackjack;
         }
         else
         {
@@ -95,41 +95,45 @@ do
     }
 
     //Todo split
-
-    Console.WriteLine("Hva vil du gjøre ? 1 - Trekk ett kort. 2 - Stå. 3 - doble.");
-    do
+    int Hands = 1;
+    for (int i = 0; i < Hands; i++)
     {
-        //Todo: input feilhåndtering.
-        input = Console.ReadKey().KeyChar;
-        Console.WriteLine();
-        Console.WriteLine();
-        if (input == '1')
+        do
         {
-            game.DealCardPlayer(0, true);
-            if (!player.CheckIfHandDone(0))
-                WriteInfo();
+            Console.WriteLine(game.GetWriteString(i));
+            //Todo: input feilhåndtering.
+            input = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+            Console.WriteLine();
+            if (input == '1')
+            {
+                game.DealCardPlayer(i, true);
+                if (!player.CheckIfHandDone(i))
+                    WriteInfo();
 
-        }
-        else if (input == '2')
-        {
-            player.HandDone(0);
-        }
-        else if (input == '3')
-        {
-            game.DealCardPlayer(0, true);
-            player.DoubleBet(0);
-            player.HandDone(0);
-        }
-        else if (input == '4')
-        {
-            //split
-        }
-        if (player.AllHandsDone())
-        {
-            game.EndRound();
-        }
+            }
+            else if (input == '2')
+            {
+                player.HandDone(i);
+            }
+            else if (input == '3')
+            {
+                game.DealCardPlayer(i, true);
+                player.DoubleBet(i);
+                player.HandDone(i);
+            }
+            else if (input == '4')
+            {
+                player.SplitHand(i);
+                game.DealCardPlayer(i, true);
+                game.DealCardPlayer(Hands, true);
+                Hands++;
+            }
 
-    } while (!game.CheckIfRoundEnded());
+        } while (!player.CheckIfHandDone(i));
+    }
+    game.EndRound();
+EndBecauseBlackjack:
     Console.WriteLine("Vil du fortsette å spille? J/N");
     input = Console.ReadKey().KeyChar;
     Console.WriteLine();

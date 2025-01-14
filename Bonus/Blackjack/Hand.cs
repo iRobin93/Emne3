@@ -13,7 +13,6 @@ namespace Blackjack
         private bool _isDone = false;
         private int _bet;
 
-
         public void AddCard(Card card)
         {
             _cardsInHand.Add(card);
@@ -26,9 +25,30 @@ namespace Blackjack
             _isDone = true;
         }
 
+        public void SplitHand(Hand newHand)
+        {
+            Card card2 = _cardsInHand[1];
+            newHand.AddCard(card2);
+            _cardsInHand.RemoveAt(1);
+            newHand.SetBet(_bet);
+        }
+
+
         public bool IsDone()
         {
             return _isDone;
+        }
+
+        public int GetNumberOfCardsInHand()
+        {
+            return _cardsInHand.Count;
+        }
+
+        public bool CheckIfCardsAreSame()
+        {
+            if (_cardsInHand[0].GetRank() == _cardsInHand[1].GetRank())
+                return true;
+            return false;
         }
 
         public string GetStringCardsInHand(bool hideSecondCard, bool cardStringLastCard)

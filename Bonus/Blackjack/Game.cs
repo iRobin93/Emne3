@@ -13,13 +13,26 @@ namespace Blackjack
         private Player _player;
         private House _house;
         private bool _endRoundBool = false;
-        
 
         public Game(Deck deck, Player player, House house)
         {
             _deck = deck;
             _player = player;
             _house = house;
+        }
+
+        public string GetWriteString(int indexHand)
+        {
+            string writeString = "Hva vil du gjøre ?: 1 - Trekke et kort. 2 - Stå";
+            if (_player.GetNumberOfCardsInHand(indexHand) < 3)
+            {
+                writeString += " 3 - Doble.";
+                if (_player.CheckIfCardsAreSame(indexHand))
+                    writeString += " 4 - Split.";
+            }
+            
+
+            return writeString;
         }
 
         public void StartRound()
